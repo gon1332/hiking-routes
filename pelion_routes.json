@@ -1,0 +1,92 @@
+{
+    "graph": {
+        "type": "routes",
+        "label": "Pelion Routes Graph",
+        "directed": false,
+        "nodes": [
+            {
+                "id": "Makrinitsa",
+                "metadata": {
+                    "type": "village",
+                    "latitude": 39.401970,
+                    "longtitude": 22.986651,
+                    "elevation": 620
+                }
+            },
+            {
+                "id": "Portaria",
+                "metadata": {
+                    "type": "village",
+                    "latitude": 39.390805,
+                    "longtitude": 22.998680,
+                    "elevation": 590
+                }
+            },
+            {
+                "id": "Stagiates",
+                "metadata": {
+                    "type": "village",
+                    "latitude": 39.389081,
+                    "longtitude": 22.983171,
+                    "elevation": 390
+                }
+            },
+            {
+                "id": "Pouri",
+                "metadata": {
+                    "type": "village",
+                    "latitude": 39.477589,
+                    "longtitude": 23.093169,
+                    "elevation": 220
+                }
+            },
+            {
+                "id": "West Shelter",
+                "metadata": {
+                    "type": "shelter",
+                    "latitude": 39.441077,
+                    "longtitude": 23.034660,
+                    "elevation": 1406
+                }
+            }
+        ],
+        "edges": [
+            {
+                "source": "Makrinitsa",
+                "target": "Portaria",
+                "metadata": {
+                    "distance": 4.35
+                }
+            },
+            {
+                "source": "Makrinitsa",
+                "target": "Stagiates",
+                "metadata": {
+                    "distance": 2.75
+                }
+            },
+            {
+                "source": "Stagiates",
+                "target": "Portaria",
+                "metadata": {
+                    "distance": 1.77
+                }
+            },
+            {
+                "source": "Makrinitsa",
+                "target": "West Shelter",
+                "metadata": {
+                    "distance": 10.6
+                }
+            },
+            {
+                "source": "West Shelter",
+                "target": "Pouri",
+                "metadata": {
+                    "distance": 10.8
+                }
+            }
+
+        ]
+    }
+}

@@ -1,0 +1,3 @@
+[submodule "pyjsongraph"]
+	path = pyjsongraph
+	url = git@github.com:gon1332/pyjsongraph.git
