@@ -4,6 +4,7 @@
 
 import networkx as nx
 from networkx.algorithms.shortest_paths.generic import shortest_path
+import matplotlib.lines as mlines
 import matplotlib.pyplot as plt
 
 
@@ -87,6 +88,15 @@ class HikingNetwork(object):
                                node_list=self.G_shelters,
                                **options)
 
+    def _draw_legend(self):
+        village_point = mlines.Line2D([], [], color='gray', marker='s',
+                                      markersize=10, linestyle='',
+                                      label='village')
+        shelter_point = mlines.Line2D([], [], color='brown', marker='p',
+                                      markersize=10, linestyle='',
+                                      label='shelter')
+        plt.legend(loc="lower left", handles=[village_point, shelter_point])
+
     def draw(self):
         """ Draw the network.
 
@@ -108,6 +118,8 @@ class HikingNetwork(object):
         for p in pos:
             pos[p][1] += 0.07
         nx.draw_networkx_labels(self.G, pos)
+
+        self._draw_legend()
 
         # Show the network
         plt.show()
