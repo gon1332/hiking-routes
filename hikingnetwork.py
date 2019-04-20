@@ -74,15 +74,15 @@ class HikingNetwork(object):
         nx.draw_networkx_nodes(self.G, pos, node_list=self.get_points(),
                                **options)
 
-        for p in pos:
-            pos[p][1] += 0.07
-        nx.draw_networkx_labels(self.G, pos)
-
         # Draw edges
         edge_labels = dict([((u, v,), str(d['distance']) + "km")
                            for u, v, d in self.G.edges(data=True)])
         nx.draw_networkx_edges(self.G, pos)
         nx.draw_networkx_edge_labels(self.G, pos, edge_labels=edge_labels)
+
+        for p in pos:
+            pos[p][1] += 0.07
+        nx.draw_networkx_labels(self.G, pos)
 
         # Show the network
         plt.show()
