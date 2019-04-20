@@ -8,6 +8,17 @@ import matplotlib.lines as mlines
 import matplotlib.pyplot as plt
 
 
+villages_settings = {
+    'marker': 's',
+    'color': 'grey',
+}
+
+shelters_settings = {
+    'marker': 'p',
+    'color': 'brown',
+}
+
+
 class HikingNetwork(object):
 
     """ Hiking Routes Network. """
@@ -67,8 +78,8 @@ class HikingNetwork(object):
     def _draw_villages(self, pos):
         options = {
             'font_size': 9,
-            'node_color': 'grey',
-            'node_shape': 's',
+            'node_color': villages_settings['color'],
+            'node_shape': villages_settings['marker'],
             'font_family': 'san-serif',
             'node_size': 50,
         }
@@ -79,8 +90,8 @@ class HikingNetwork(object):
     def _draw_shelters(self, pos):
         options = {
             'font_size': 9,
-            'node_color': 'brown',
-            'node_shape': 'p',
+            'node_color': shelters_settings['color'],
+            'node_shape': shelters_settings['marker'],
             'font_family': 'san-serif',
             'node_size': 50,
         }
@@ -89,10 +100,12 @@ class HikingNetwork(object):
                                **options)
 
     def _draw_legend(self):
-        village_point = mlines.Line2D([], [], color='gray', marker='s',
+        village_point = mlines.Line2D([], [], color=villages_settings['color'],
+                                      marker=villages_settings['marker'],
                                       markersize=10, linestyle='',
                                       label='village')
-        shelter_point = mlines.Line2D([], [], color='brown', marker='p',
+        shelter_point = mlines.Line2D([], [], color=shelters_settings['color'],
+                                      marker=shelters_settings['marker'],
                                       markersize=10, linestyle='',
                                       label='shelter')
         plt.legend(loc="lower left", handles=[village_point, shelter_point])
