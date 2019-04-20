@@ -39,6 +39,8 @@ def main():
     for e in hiking_net.get_routes():
         print(" *", e)
 
+    print(hiking_net.get_shortest_route("Makrinitsa", "Pouri"))
+
     hiking_net.draw()
 
 

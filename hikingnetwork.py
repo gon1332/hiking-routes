@@ -3,6 +3,7 @@
 
 
 import networkx as nx
+from networkx.algorithms.shortest_paths.generic import shortest_path
 import matplotlib.pyplot as plt
 
 
@@ -45,6 +46,14 @@ class HikingNetwork(object):
 
         """
         return self.G.edges
+
+    def get_shortest_route(self, point_a, point_b):
+        """ Get the shortest route between two points.
+
+        :returns: list of one hop routes for the shortest route
+
+        """
+        return shortest_path(self.G, point_a, point_b, "distance")
 
     def draw(self):
         """ Draw the network.
