@@ -5,6 +5,15 @@
         "directed": false,
         "nodes": [
             {
+                "id": "Volos - Aidonofolies",
+                "metadata": {
+                    "type": "village",
+                    "latitude": 39.380495,
+                    "longtitude": 22.966252,
+                    "elevation": 105
+                }
+            },
+            {
                 "id": "Makrinitsa",
                 "metadata": {
                     "type": "village",
@@ -51,6 +60,20 @@
             }
         ],
         "edges": [
+            {
+                "source": "Volos - Aidonofolies",
+                "target": "Makrinitsa",
+                "metadata": {
+                    "distance": 4.1
+                }
+            },
+            {
+                "source": "Volos - Aidonofolies",
+                "target": "Stagiates",
+                "metadata": {
+                    "distance": 2
+                }
+            },
             {
                 "source": "Makrinitsa",
                 "target": "Portaria",
