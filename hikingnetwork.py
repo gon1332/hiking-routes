@@ -134,7 +134,7 @@ class HikingNetwork(object):
             wspace=0.2,
             hspace=0.2)
 
-    self._draw_legend(config)
+        self._draw_legend(config)
 
         # Show the network
         plt.axis('off')
