@@ -4,6 +4,7 @@
 
 import networkx as nx
 from networkx.algorithms.shortest_paths.generic import shortest_path
+import matplotlib.lines as mlines
 import matplotlib.pyplot as plt
 
 
@@ -16,15 +17,23 @@ class HikingNetwork(object):
 
         print("\nLoaded {}".format(graph['label']))
 
-        # Fill the Graph
         self.G = nx.Graph()
 
+        # Fill the Graph with points
         for n in graph['nodes']:
             options = {
                 'type': n['metadata']['type'],
             }
             self.G.add_node(n['id'], **options)
 
+        # Villages subgraph
+        self.G_villages = self.G.subgraph([n[0] for n in self.G.nodes.data() if
+                                           n[1]['type'] == "village"])
+        # Shelters subgraph
+        self.G_shelters = self.G.subgraph([n[0] for n in self.G.nodes.data() if
+                                           n[1]['type'] == "shelter"])
+
+        # Fill the Graph with edges
         for e in graph['edges']:
             options = {
                 'distance': e['metadata']['distance'],
@@ -55,7 +64,31 @@ class HikingNetwork(object):
         """
         return shortest_path(self.G, point_a, point_b, "distance")
 
-    def draw(self):
+    def _draw_villages(self, pos, options):
+        nx.draw_networkx_nodes(self.G_villages, pos,
+                               node_list=self.G_villages,
+                               **options)
+
+    def _draw_shelters(self, pos, options):
+        nx.draw_networkx_nodes(self.G_shelters, pos,
+                               node_list=self.G_shelters,
+                               **options)
+
+    def _draw_legend(self, config):
+        village_point = mlines.Line2D([], [],
+                                      color=config.village_conf['node_color'],
+                                      marker=config.village_conf['node_shape'],
+                                      markersize=10, linestyle='',
+                                      label='village')
+
+        shelter_point = mlines.Line2D([], [],
+                                      color=config.shelter_conf['node_color'],
+                                      marker=config.shelter_conf['node_shape'],
+                                      markersize=10, linestyle='',
+                                      label='shelter')
+        plt.legend(loc="lower left", handles=[village_point, shelter_point])
+
+    def draw(self, config):
         """ Draw the network.
 
         :returns: None
@@ -64,15 +97,8 @@ class HikingNetwork(object):
         pos = nx.spring_layout(self.G)
 
         # Draw nodes
-        options = {
-            'font_size': 9,
-            'node_color': 'green',
-            'node_shape': 's',
-            'font_family': 'san-serif',
-            'node_size': 50,
-        }
-        nx.draw_networkx_nodes(self.G, pos, node_list=self.get_points(),
-                               **options)
+        self._draw_villages(pos, config.village_conf)
+        self._draw_shelters(pos, config.shelter_conf)
 
         # Draw edges
         edge_labels = dict([((u, v,), str(d['distance']) + "km")
@@ -83,6 +109,8 @@ class HikingNetwork(object):
         for p in pos:
             pos[p][1] += 0.07
         nx.draw_networkx_labels(self.G, pos)
+
+        self._draw_legend(config)
 
         # Show the network
         plt.show()
