@@ -6,6 +6,8 @@ import networkx as nx
 from networkx.algorithms.shortest_paths.generic import shortest_path
 import matplotlib.lines as mlines
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
+import utils
 
 
 class HikingNetwork(object):
@@ -94,9 +96,22 @@ class HikingNetwork(object):
         :returns: None
 
         """
+        dpi = 180
+        w, h = utils.get_screen_res()
+        plt.figure(1, figsize=(w/dpi, w/dpi))
         pos = nx.spring_layout(self.G)
 
         # Draw nodes
+        options = {
+            'font_size': 5,
+            'node_color': 'green',
+            'node_shape': 's',
+            'font_family': 'san-serif',
+            'node_size': 50,
+        }
+        nx.draw_networkx_nodes(self.G, pos, node_list=self.get_points(),
+                               **options)
+
         self._draw_villages(pos, config.village_conf)
         self._draw_shelters(pos, config.shelter_conf)
 
@@ -110,7 +125,18 @@ class HikingNetwork(object):
             pos[p][1] += 0.07
         nx.draw_networkx_labels(self.G, pos)
 
-        self._draw_legend(config)
+        # Subplot settings
+        plt.subplots_adjust(
+            left=0.0,
+            right=0.95,
+            bottom=0.0,
+            top=0.95,
+            wspace=0.2,
+            hspace=0.2)
+
+    self._draw_legend(config)
 
         # Show the network
+        plt.axis('off')
+        plt.suptitle('Pelion routes')
         plt.show()
