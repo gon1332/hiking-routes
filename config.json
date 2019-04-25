@@ -1,0 +1,18 @@
+{
+    "points": {
+        "village": {
+            "node_shape": "s",
+            "node_color": "grey",
+            "node_size": 50,
+            "font_size": 9,
+            "font_family": "san-serif"
+        },
+        "shelter": {
+            "node_shape": "p",
+            "node_color": "brown",
+            "node_size": 50,
+            "font_size": 9,
+            "font_family": "san-serif"
+        }
+    }
+}

@@ -8,6 +8,18 @@ from pyjsongraph.jsongraph import (validate_schema,
 import hikingnetwork
 
 
+class Configuration(object):
+
+    """ Application Configuration """
+
+    def __init__(self, config_json):
+        with open(config_json) as f:
+            config = json.load(f)
+
+        self.village_conf = config['points']['village']
+        self.shelter_conf = config['points']['shelter']
+
+
 def load_json(routes_json):
     """ Load and validate the json file
 
@@ -28,6 +40,7 @@ def load_json(routes_json):
 
 
 def main():
+    config = Configuration("config.json")
     graphs = load_json("pelion_routes.json")
     hiking_net = hikingnetwork.HikingNetwork(next(graphs))
 
@@ -41,7 +54,7 @@ def main():
 
     print(hiking_net.get_shortest_route("Makrinitsa", "Pouri"))
 
-    hiking_net.draw()
+    hiking_net.draw(config)
 
 
 if __name__ == '__main__':
