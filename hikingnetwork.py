@@ -136,6 +136,15 @@ class HikingNetwork(object):
 
         self._draw_legend(config)
 
+        # Subplot settings
+        plt.subplots_adjust(
+            left=0.0,
+            right=0.95,
+            bottom=0.0,
+            top=0.95,
+            wspace=0.2,
+            hspace=0.2)
+
         # Show the network
         plt.axis('off')
         plt.suptitle('Pelion routes')
