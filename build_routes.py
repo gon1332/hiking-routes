@@ -39,7 +39,7 @@ def load_json(routes_json):
     return load_graphs(routes, validate=False, schema='', verbose=False)
 
 
-def run_plot():
+def run_plot(dt):
     config = Configuration("config.json")
     graphs = load_json("pelion_routes.json")
     hiking_net = hikingnetwork.HikingNetwork(next(graphs))
