@@ -1,9 +1,11 @@
 # Built-in modules
 from math import sin, cos
 import os
+import json
 
 # Our third party modules
 from build_routes import run_plot
+from utils import create_routes_from_nodes
 
 # Kivy modules
 from kivy.app import App
@@ -18,6 +20,14 @@ from kivy.uix.spinner import Spinner
 
 class MainApp(App):
 
+    def on_spinner_select(self, spinner, text):
+        print("You chose: " + text)
+        if self.spinner.text != "Makrinitsa-Portaria":
+            self.spinnerSelection.text = "We have not " + text + " route yet!"
+        else:
+            self.spinnerSelection.text = self.spinner.text
+            run_plot()
+
     def build(self):
         scroll_view = ScrollView()
         layout = GridLayout(cols=1, padding=20)
@@ -30,33 +40,24 @@ class MainApp(App):
         layout.add_widget(anchor_south)
 
         # Configure spinner object
-        # TODO: read routes from json
+        with open('./pelion_routes.json') as route_file:
+            route_nodes = json.load(route_file)
+        routes = create_routes_from_nodes(route_nodes['graph']['edges'])
+
         self.spinner = Spinner(
             text='Select Route',
-            values=('Makrinitsa-Portaria',
-                    'Makrinitsa-Stagiates',
-                    'Stagiates-Portaria',
-                    'Makrinitsa-West shelter'),
+            values=routes,
             size=(400, 100), pos=[100, 100], size_hint=(None, None))
 
         anchor_center.add_widget(self.spinner)
         self.spinner.bind(text=self.on_spinner_select)
 
-        self.spinnerSelection = Label(text="Selected value in spinner is: %s" % self.spinner.text)
+        self.spinnerSelection = Label(text="Selected value is: %s" % self.spinner.text)
         anchor_north.add_widget(self.spinnerSelection)
         self.spinnerSelection.pos_hint = {'x': .1, 'y': .3}
 
         scroll_view.add_widget(layout)
         return scroll_view
-
-    def on_spinner_select(self, spinner, text):
-        print("You chose: " + text)
-        if self.spinner.text != "Makrinitsa-Portaria":
-            self.spinnerSelection.text = "You chose " + text + ". We have not this route yet!"
-        else:
-            self.spinnerSelection.text = self.spinner.text
-            run_plot()
-
 
 if __name__ == '__main__':
     MainApp().run()
